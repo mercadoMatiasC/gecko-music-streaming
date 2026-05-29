@@ -14,19 +14,22 @@ use Laravel\Sanctum\HasApiTokens;
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, HasApiTokens;
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    //RELATIONSHIPS
+    public function followers() {
+        return $this->belongsToMany(User::class, 'user_follows', 'followed_user_id', 'follower_user_id')->withTimestamps();
+    }
+
+    public function following() {
+        return $this->belongsToMany(User::class, 'user_follows', 'follower_user_id', 'followed_user_id')->withTimestamps();
     }
 }

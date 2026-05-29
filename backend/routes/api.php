@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserFollowController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -11,6 +12,13 @@ use Illuminate\Support\Facades\Route;
             Route::get   ('/users', 'index');
             Route::get   ('/users/{user}', 'show');
             Route::patch ('/users/{user}', 'update');
+        });
+
+        Route::controller(UserFollowController::class)->group(function () {
+            Route::get   ('/follows/followers', 'followers');
+            Route::get   ('/follows/following', 'following');
+            Route::post  ('/follows/{user}', 'store');
+            Route::delete('/follows/{user}', 'destroy');
         });
     });
 

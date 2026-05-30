@@ -22,7 +22,7 @@ class ProfileController extends Controller {
     }
 
     public function show(User $user) {
-        return (new UserShowResource($user));
+        return new UserShowResource($user);
     }
 
     public function update(UserRequest $request, UserService $use_service, User $user) {

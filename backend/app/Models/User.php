@@ -24,6 +24,11 @@ class User extends Authenticatable
         ];
     }
 
+    //INFORMATION
+    public function isAdmin() {
+        return $this->is_admin;
+    }
+
     //RELATIONSHIPS
     public function followers() {
         return $this->belongsToMany(User::class, 'user_follows', 'followed_user_id', 'follower_user_id')->withTimestamps();

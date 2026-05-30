@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UserFollowResource;
 use App\Http\Resources\UserIndexResource;
 use App\Models\User;
-use App\Models\UserFollow;
 use App\Services\UserFollowService;
 use Illuminate\Support\Facades\Auth;
 

@@ -1,12 +1,13 @@
 <?php
 
+use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserFollowController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
     Route::middleware(['auth:sanctum'])->group(function () {
-        //-- PROFILE --
+        //-- PROFILES --
         Route::controller(ProfileController::class)->group(function () {
             Route::get   ('/me', 'me');
             Route::get   ('/users', 'index');
@@ -14,11 +15,21 @@ use Illuminate\Support\Facades\Route;
             Route::patch ('/users/{user}', 'update');
         });
 
+        //-- USER FOLLOWS --
         Route::controller(UserFollowController::class)->group(function () {
             Route::get   ('/follows/followers', 'followers');
             Route::get   ('/follows/following', 'following');
             Route::post  ('/follows/{user}', 'store');
             Route::delete('/follows/{user}', 'destroy');
+        });
+
+        //-- ARTISTS --
+        Route::controller(ArtistController::class)->group(function () {
+            Route::get   ('/artists', 'index');
+            Route::post  ('/artists', 'store');
+            Route::get   ('/artists/{artist}', 'show');
+            Route::delete('/artists/{artist}', 'destroy');
+            Route::patch ('/artists/{artist}', 'update');
         });
     });
 

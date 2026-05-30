@@ -30,6 +30,14 @@ class User extends Authenticatable
     }
 
     //RELATIONSHIPS
+    public function uploadedArtists() {
+        return $this->hasMany(Artist::class, 'uploader_id');
+    }
+
+    public function uploadedAlbums() {
+        return $this->hasMany(Album::class, 'uploader_id');
+    }
+
     public function followers() {
         return $this->belongsToMany(User::class, 'user_follows', 'followed_user_id', 'follower_user_id')->withTimestamps();
     }

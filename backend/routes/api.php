@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserFollowController;
@@ -30,6 +31,15 @@ use Illuminate\Support\Facades\Route;
             Route::get   ('/artists/{artist}', 'show');
             Route::delete('/artists/{artist}', 'destroy');
             Route::patch ('/artists/{artist}', 'update');
+        });
+
+        //-- ALBUMS --
+        Route::controller(AlbumController::class)->group(function () {
+            Route::get   ('/artists/{artist}/albums', 'index');
+            Route::post  ('/artists/{artist}/albums', 'store');
+            Route::get   ('/albums/{album}', 'show');
+            Route::delete('/albums/{album}', 'destroy');
+            Route::patch ('/albums/{album}', 'update');
         });
     });
 

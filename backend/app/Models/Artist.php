@@ -10,4 +10,13 @@ class Artist extends Model {
         'name',
         'artist_image_route'
     ];
+
+    //RELATIONSHIPS
+    public function albums() {
+        return $this->hasMany(Album::class);
+    }
+
+    public function uploader(){
+        return $this->belongsTo(User::class, 'uploader_id');
+    }
 }

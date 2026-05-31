@@ -12,11 +12,15 @@ class Artist extends Model {
     ];
 
     //RELATIONSHIPS
+    public function uploader(){
+        return $this->belongsTo(User::class, 'uploader_id');
+    }
+
     public function albums() {
         return $this->hasMany(Album::class);
     }
 
-    public function uploader(){
-        return $this->belongsTo(User::class, 'uploader_id');
+    public function songs(){
+        return $this->hasMany(Song::class);
     }
 }

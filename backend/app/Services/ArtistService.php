@@ -48,8 +48,8 @@ class ArtistService {
         if (($auth_user->id != $artist->uploader_id) && (!$auth_user->isAdmin()))
             throw new BusinessException("You are not allowed to delete this resource.");
 
-        //if ($artist->albums()->exists() || $artist->songs()->exists())
-         //   throw new BusinessException("Cannot delete artist because they have associated albums or songs.");
+        if ($artist->albums()->exists() || $artist->songs()->exists())
+            throw new BusinessException("Cannot delete this artist because they have associated albums or songs.");
     }
 
     public function removeArtist(User $auth_user, Artist $artist) {

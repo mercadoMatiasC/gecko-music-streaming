@@ -33,7 +33,7 @@ class ArtistController extends Controller {
     }
 
     public function destroy(Artist $artist, ArtistService $artist_service) {
-        $artist = $artist_service->removeArtist(Auth::user(), $artist);
+        $artist_service->removeArtist(Auth::user(), $artist);
 
         return response()->json(
             [

@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Album extends Model {
+class Song extends Model {
     protected $fillable = [
         'uploader_id',
+        'album_id',
         'artist_id',
         'title',
-        'album_image_route',
-        'date_released'
+        'play_count',
+        'file_route'
     ];
 
     //RELATIONSHIPS
@@ -22,7 +23,7 @@ class Album extends Model {
         return $this->belongsTo(Artist::class, 'artist_id');
     }
 
-    public function songs(){
-        return $this->hasMany(Song::class);
+    public function album(){
+        return $this->belongsTo(Album::class, 'album_id');
     }
 }

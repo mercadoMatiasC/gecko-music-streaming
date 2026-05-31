@@ -12,7 +12,7 @@ class AlbumService {
         $existing = Album::where('artist_id', $artist->id)->where('title', $data['title'])->exists();
 
         if ($existing)
-            throw new BusinessException("There's already an album under that artist.");
+            throw new BusinessException("There's already an album with that name under that artist.");
     }
 
     public function storeAlbum(User $auth_user, Artist $artist, array $data) {
@@ -32,10 +32,12 @@ class AlbumService {
         if (($auth_user->id != $album->uploader_id) && (!$auth_user->isAdmin()))
             throw new BusinessException("You are not allowed to update this resource.");
 
-        $existing = Album::where('artist_id', $album->artist_id)->where('title', $data['title'])->exists();
+        $existing = Album::where('id', '!=', $album->id)
+        ->where('artist_id', $album->artist_id)
+        ->where('title', $data['title'])->exists();
 
         if ($existing)
-            throw new BusinessException("There's already an album under that artist.");
+            throw new BusinessException("There's already an album with that name under that artist.");
     }
 
     public function updateAlbum(User $auth_user, Album $album, array $data) {
@@ -51,8 +53,8 @@ class AlbumService {
         if (($auth_user->id != $album->uploader_id) && (!$auth_user->isAdmin()))
             throw new BusinessException("You are not allowed to delete this resource.");
 
-        //if ($album->songs()->exists())
-        //   throw new BusinessException("Cannot delete this album because they have associated songs.");
+        if ($album->songs()->exists())
+            throw new BusinessException("Cannot delete this album because they have associated songs.");
     }
 
     public function removeAlbum(User $auth_user, Album $album) {

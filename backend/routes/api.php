@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SongController;
 use App\Http\Controllers\UserFollowController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,15 @@ use Illuminate\Support\Facades\Route;
             Route::get   ('/albums/{album}', 'show');
             Route::delete('/albums/{album}', 'destroy');
             Route::patch ('/albums/{album}', 'update');
+        });
+
+        //-- SONGS --
+        Route::controller(SongController::class)->group(function () {
+            Route::get   ('/songs', 'index');
+            Route::post  ('/songs', 'store');
+            Route::get   ('/songs/{song}', 'show');
+            Route::delete('/songs/{song}', 'destroy');
+            Route::patch ('/songs/{song}', 'update');
         });
     });
 

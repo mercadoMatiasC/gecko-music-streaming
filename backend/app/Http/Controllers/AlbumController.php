@@ -37,7 +37,7 @@ class AlbumController extends Controller {
     }
 
     public function destroy(Album $album, AlbumService $album_service) {
-        $album = $album_service->removeAlbum(Auth::user(), $album);
+        $album_service->removeAlbum(Auth::user(), $album);
 
         return response()->json(
             [

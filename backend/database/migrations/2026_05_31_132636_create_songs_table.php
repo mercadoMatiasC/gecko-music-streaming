@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Album;
 use App\Models\Artist;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -8,18 +9,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        Schema::create('albums', function (Blueprint $table) {
+        Schema::create('songs', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class, 'uploader_id')->constrained();
+            $table->foreignIdFor(Album::class, 'album_id')->nullable()->constrained();
             $table->foreignIdFor(Artist::class, 'artist_id')->constrained();
             $table->string('title');
-            $table->string('album_image_route')->nullable();
-            $table->date('date_released');
+            $table->integer('play_count')->default(0);
+            $table->string('file_route')->nullable();
             $table->timestamps();
         });
     }
 
     public function down(): void {
-        Schema::dropIfExists('albums');
+        Schema::dropIfExists('songs');
     }
 };

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\UserFollowController;
@@ -30,8 +31,9 @@ use Illuminate\Support\Facades\Route;
             Route::get   ('/artists', 'index');
             Route::post  ('/artists', 'store');
             Route::get   ('/artists/{artist}', 'show');
-            Route::delete('/artists/{artist}', 'destroy');
             Route::patch ('/artists/{artist}', 'update');
+            Route::delete('/artists/{artist}', 'destroy');
+
         });
 
         //-- ALBUMS --
@@ -39,8 +41,8 @@ use Illuminate\Support\Facades\Route;
             Route::get   ('/artists/{artist}/albums', 'index');
             Route::post  ('/artists/{artist}/albums', 'store');
             Route::get   ('/albums/{album}', 'show');
-            Route::delete('/albums/{album}', 'destroy');
             Route::patch ('/albums/{album}', 'update');
+            Route::delete('/albums/{album}', 'destroy');
         });
 
         //-- SONGS --
@@ -48,8 +50,18 @@ use Illuminate\Support\Facades\Route;
             Route::get   ('/songs', 'index');
             Route::post  ('/songs', 'store');
             Route::get   ('/songs/{song}', 'show');
-            Route::delete('/songs/{song}', 'destroy');
             Route::patch ('/songs/{song}', 'update');
+            Route::delete('/songs/{song}', 'destroy');
+        });
+
+        //-- PLAYLISTS --
+        Route::controller(PlaylistController::class)->group(function () {
+            Route::get   ('/myPlaylists', 'myPlaylists');
+            Route::get   ('/playlists', 'index');
+            Route::post  ('/playlists', 'store');
+            Route::get   ('/playlists/{playlist}', 'show');
+            Route::patch ('/playlists/{playlist}', 'update');
+            Route::delete('/playlists/{playlist}', 'destroy');
         });
     });
 
@@ -59,6 +71,5 @@ use Illuminate\Support\Facades\Route;
             'user' => $request->user(),
         ];
     });
-
 
 require __DIR__.'/auth.php';

@@ -7,13 +7,13 @@ use App\Models\UserFollow;
 
 class UserFollowService {
     public function ensureUserCanFollow(User $auth_user, User $requested_user) {
-        if ($auth_user->id === $requested_user->id)
+        if ($requested_user->is($auth_user))
             throw new BusinessException("You cannot send a follow to yourself.");
 
         if (!$requested_user->active_status)
             throw new BusinessException("The requested user is not available.");
 
-        $existing = UserFollow::where('follower_user_id', $auth_user->id)->where('followed_user_id', $requested_user->id)->exists();
+        $existing = $auth_user->following()->where('followed_user_id', $requested_user->id)->exists();
 
         if ($existing)
             throw new BusinessException("You are already following ".$requested_user->username.".");
@@ -29,7 +29,7 @@ class UserFollowService {
     }
 
     public function removeFollow(User $auth_user, User $other_user) {
-        $exists = UserFollow::where('follower_user_id', $auth_user->id)->where('followed_user_id', $other_user->id)->exists();
+        $exists = $auth_user->following()->where('followed_user_id', $other_user->id)->exists();
 
         if (!$exists)
             throw new BusinessException("You are not following ".$other_user->username.".");

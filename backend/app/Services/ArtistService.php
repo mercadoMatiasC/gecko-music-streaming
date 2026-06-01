@@ -26,7 +26,7 @@ class ArtistService {
 
     //-- UPDATE -- 
     public function ensureArtistCanBeUpdated(User $auth_user, Artist $artist, array $data) {
-        if (($auth_user->id != $artist->uploader_id) && (!$auth_user->isAdmin()))
+        if ($artist->uploader->isNot($auth_user) && (!$auth_user->isAdmin()))
             throw new BusinessException("You are not allowed to update this resource.");
 
         $existing = Artist::where('id', '!=', $artist->id)->where('name', $data['name'])->exists();
@@ -45,7 +45,7 @@ class ArtistService {
 
     //-- DELETE --
     public function ensureArtistCanBeDeleted(User $auth_user, Artist $artist) {
-        if (($auth_user->id != $artist->uploader_id) && (!$auth_user->isAdmin()))
+        if ($artist->uploader->isNot($auth_user) && (!$auth_user->isAdmin()))
             throw new BusinessException("You are not allowed to delete this resource.");
 
         if ($artist->albums()->exists() || $artist->songs()->exists())

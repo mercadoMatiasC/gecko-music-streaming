@@ -9,7 +9,7 @@ use App\Models\User;
 class AlbumService {
     //-- STORE --
     public function ensureAlbumCanBeStored(array $data, Artist $artist) {
-        $existing = Album::where('artist_id', $artist->id)->where('title', $data['title'])->exists();
+        $existing = $artist->albums()->where('title', $data['title'])->exists();
 
         if ($existing)
             throw new BusinessException("There's already an album with that name under that artist.");
@@ -29,7 +29,7 @@ class AlbumService {
 
     //-- UPDATE -- 
     public function ensureAlbumCanBeUpdated(User $auth_user, Album $album, array $data) {
-        if (($auth_user->id != $album->uploader_id) && (!$auth_user->isAdmin()))
+        if ($album->uploader->isNot($auth_user) && (!$auth_user->isAdmin()))
             throw new BusinessException("You are not allowed to update this resource.");
 
         $existing = Album::where('id', '!=', $album->id)
@@ -50,7 +50,7 @@ class AlbumService {
 
     //-- DELETE --
     public function ensureAlbumCanBeDeleted(User $auth_user, Album $album) {
-        if (($auth_user->id != $album->uploader_id) && (!$auth_user->isAdmin()))
+        if ($album->uploader->isNot($auth_user) && (!$auth_user->isAdmin()))
             throw new BusinessException("You are not allowed to delete this resource.");
 
         if ($album->songs()->exists())

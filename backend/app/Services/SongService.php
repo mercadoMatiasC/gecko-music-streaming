@@ -57,7 +57,7 @@ class SongService {
 
     //-- UPDATE -- 
     public function ensureSongCanBeUpdated(User $auth_user, Song $song, array $data) {
-        if (($auth_user->id != $song->uploader_id) && (!$auth_user->isAdmin()))
+        if ($song->uploader->isNot($auth_user) && (!$auth_user->isAdmin()))
             throw new BusinessException("You are not allowed to update this resource.");
 
         $existing = Song::where('id', '!=', $song->id)
@@ -87,8 +87,8 @@ public function updateSong(User $auth_user, Song $song, array $data) {
 
             $filename = "{$song->id}.mp3";
 
-            $old_file_path = $old_directory . '/' . $filename;
-            $new_file_path = $new_directory . '/' . $filename;
+            $old_file_path = $old_directory.'/'.$filename;
+            $new_file_path = $new_directory.'/'.$filename;
 
             if (Storage::disk('public')->exists($old_file_path)) {
                 Storage::disk('public')->makeDirectory($new_directory);
@@ -117,7 +117,7 @@ public function updateSong(User $auth_user, Song $song, array $data) {
 
     //-- DELETE --
     public function ensureSongCanBeDeleted(User $auth_user, Song $song) {
-        if (($auth_user->id != $song->uploader_id) && (!$auth_user->isAdmin()))
+        if ($song->uploader->isNot($auth_user) && (!$auth_user->isAdmin()))
             throw new BusinessException("You are not allowed to delete this resource.");
     }
 

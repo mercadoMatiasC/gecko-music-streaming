@@ -32,7 +32,7 @@ class UserFollowController extends Controller {
             broadcast(new PrivateFollowReceived($user->id, $senderData))->toOthers(); 
         */ 
 
-        return (new UserFollowResource($user_follow))->response()->setStatusCode(201);
+        return (new UserIndexResource($user))->response()->setStatusCode(201);
     }
 
     public function destroy(User $user, UserFollowService $user_follow_service) {

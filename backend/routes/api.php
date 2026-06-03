@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\PlaylistController;
+use App\Http\Controllers\PlaylistReactionController;
 use App\Http\Controllers\PlaylistSongController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SongController;
@@ -70,6 +71,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get   ('/playlists/{playlist}/songs', 'playlistSongs');
         Route::post  ('/playlists/{playlist}/songs/{song}', 'store');
         Route::delete('/playlists/{playlist}/songs/{song}', 'destroy');
+    });
+
+    //-- PLAYLIST REACTIONS --
+    Route::controller(PlaylistReactionController::class)->group(function () {
+        Route::get   ('/playlists/{playlist}/reactions', 'playlistReactions');
+        Route::put   ('/playlists/{playlist}/reactions', 'react');
     });
 });
 

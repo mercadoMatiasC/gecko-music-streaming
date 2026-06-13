@@ -6,6 +6,7 @@ use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\PlaylistReactionController;
 use App\Http\Controllers\PlaylistSongController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\UserFollowController;
 use Illuminate\Http\Request;
@@ -77,6 +78,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::controller(PlaylistReactionController::class)->group(function () {
         Route::get   ('/playlists/{playlist}/reactions', 'playlistReactions');
         Route::put   ('/playlists/{playlist}/reactions', 'react');
+    });
+
+    //-- REPORTS --
+    Route::controller(ReportController::class)->group(function () {
+        Route::get   ('/myReports', 'myReports');
+        Route::get   ('/reports', 'index');
+        Route::post  ('/reports', 'store');
+        Route::get   ('/reports/{report}', 'show');
+        Route::delete('/reports/{report}', 'destroy');
     });
 });
 

@@ -26,4 +26,8 @@ class Song extends Model {
     public function album(){
         return $this->belongsTo(Album::class, 'album_id');
     }
+
+    public function reports() {
+        return $this->morphMany(Report::class, 'reportable');
+    }
 }

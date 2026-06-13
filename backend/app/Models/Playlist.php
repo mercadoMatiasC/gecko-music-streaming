@@ -30,4 +30,8 @@ class Playlist extends Model {
     public function reactions(): BelongsToMany {
         return $this->belongsToMany(User::class, 'playlist_reactions', 'playlist_id', 'user_id')->withPivot('like_status', 'saved_by_user')->withTimestamps();
     }
+
+    public function reports() {
+        return $this->morphMany(Report::class, 'reportable');
+    }
 }

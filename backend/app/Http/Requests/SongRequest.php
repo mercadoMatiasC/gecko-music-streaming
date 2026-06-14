@@ -5,8 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\File;
 
-class SongRequest extends FormRequest
-{
+class SongRequest extends FormRequest {
     public function authorize(): bool {
         return true;
     }

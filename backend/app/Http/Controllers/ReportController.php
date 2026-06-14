@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\BusinessException;
 use App\Http\Requests\ReportRequest;
 use App\Http\Resources\ReportResource;
 use App\Models\Report;
@@ -17,13 +16,6 @@ class ReportController extends Controller {
 
     public function index() {
         //ADMIN VIEW, LATER WILL FEATURE FILTERS
-        //-- ADMIN MIDDLEWARE/GATE/POLICY LOGIC FOR NOW --
-        $is_admin = Auth::user()->isAdmin();
-        
-        if (!$is_admin)
-            throw new BusinessException("You are not allowed to see the requested resource.");
-        //-- END --
-
         $reports = Report::with(['reporter', 'reportable'])->orderBy('created_at', 'desc')->paginate(8);
         return ReportResource::collection($reports);
     }
@@ -43,13 +35,6 @@ class ReportController extends Controller {
     }
 
     public function destroy(Report $report) {
-        //-- ADMIN MIDDLEWARE/GATE/POLICY LOGIC FOR NOW --
-        $is_admin = Auth::user()->isAdmin();
-        
-        if (!$is_admin)
-            throw new BusinessException("You are not allowed to delete the requested resource.");
-        //-- END --
-
         $report->delete();
 
         return response()->json(

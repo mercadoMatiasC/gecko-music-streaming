@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\PlaylistReactionController;
 use App\Http\Controllers\PlaylistSongController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\UserFollowController;
+use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -82,11 +84,21 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //-- REPORTS --
     Route::controller(ReportController::class)->group(function () {
-        Route::get   ('/myReports', 'myReports');
-        Route::get   ('/reports', 'index');
-        Route::post  ('/reports', 'store');
-        Route::get   ('/reports/{report}', 'show');
-        Route::delete('/reports/{report}', 'destroy');
+        Route::get ('/myReports', 'myReports');
+        Route::post('/reports', 'store');
+        Route::get ('/reports/{report}', 'show');
+        
+        //ADMIN ACTIONS
+        Route::middleware(EnsureUserIsAdmin::class)->group(function () {
+            Route::get   ('/reports', 'index');
+            Route::delete('/reports/{report}', 'destroy');
+        });
+    });
+
+    //-- CHANNELS --
+    Route::controller(ChannelController::class)->group(function () {
+        Route::put   ('/channels', 'upsert');
+        Route::get   ('/channels/{user}', 'show');
     });
 });
 

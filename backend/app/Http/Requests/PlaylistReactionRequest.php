@@ -5,8 +5,7 @@ namespace App\Http\Requests;
 use App\Models\Playlist;
 use Illuminate\Foundation\Http\FormRequest;
 
-class PlaylistReactionRequest extends FormRequest
-{
+class PlaylistReactionRequest extends FormRequest {
     public function authorize(): bool {
         return true;
     }

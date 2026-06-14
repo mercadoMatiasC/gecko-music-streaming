@@ -4,8 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PlaylistRequest extends FormRequest
-{
+class PlaylistRequest extends FormRequest {
     public function authorize(): bool {
         return true;
     }

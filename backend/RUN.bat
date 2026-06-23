@@ -3,7 +3,7 @@
 start /min "Xampp" "D:\xampp\xampp-control.exe"
 
 :: Start Frontend via PowerShell (Minimized, NoExit)
-:: start /min powershell -NoExit -command "cd D:\xampp\htdocs\Gecko\frontend; npm run dev -- --host"
+start /min powershell -NoExit -command "cd D:\xampp\htdocs\Gecko\frontend; npm run dev -- --host"
 
 :: Start Reverb via PowerShell (Minimized, NoExit)
 :: start /min powershell -NoExit -command "cd D:\xampp\htdocs\Gecko\backend; php artisan reverb:start --host=0.0.0.0 --port=8080 --debug"

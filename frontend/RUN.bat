@@ -1,1 +1,1 @@
-npm run dev -- --host
+start /min powershell -NoExit -command "npm run dev -- --host"

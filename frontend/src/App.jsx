@@ -2,6 +2,7 @@ import './App.css'
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { Layout } from './layout/Layout';
 import { SongPlayer } from './features/songs/components/SongPlayer';
+import { Index } from './features/home/pages/Index';
 
 export default function App() {
   const location = useLocation();
@@ -9,7 +10,7 @@ export default function App() {
   return (
     <Routes location={location} key={location.pathname}>
       <Route element={<Layout />}>
-        <Route path="/" element={<SongPlayer/>} />
+        <Route path="/" element={<Index/>} />
       </Route>
     </Routes>
   );

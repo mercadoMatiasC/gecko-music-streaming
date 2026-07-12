@@ -1,15 +1,28 @@
 @import "tailwindcss";
 
-body{
+body {
     background-color: black;
     color: rgb(240, 240, 240);
 }
 
-#song-player{
+#song-player {
     background-image: url("/images/player-background.jpg");
     background-size: cover;
 }
 
-button:hover{
+#user-profile {
+    background-image: url("/images/profile-background.jpg");
+    background-size: cover;
+}
+
+button:hover {
     cursor: pointer;
+}
+
+input[type="search"] {
+    border: 2px solid black;
+    background-color: rgb(41, 41, 41);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
 }

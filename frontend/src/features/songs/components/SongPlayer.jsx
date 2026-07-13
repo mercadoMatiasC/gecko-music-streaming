@@ -79,7 +79,7 @@ export function SongPlayer(){
                 </div>
 
                 <div className="flex justify-between ">
-                    <DefaultButton text="Save to playlist" />
+                    <DefaultButton label="Save to playlist" />
                     <button className="hidden xl:flex">
                         <img src="svgs/player-fullscreen.svg" width={32} alt="Fullscreen" onClick={() => (1+1)} />
                     </button>
